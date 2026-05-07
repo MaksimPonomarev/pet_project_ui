@@ -1,13 +1,8 @@
-import time
-from tkinter.font import names
-
-from ui.pages.base_page import BasePage, BASE_URL
 import os
 from dotenv import load_dotenv
-from playwright.sync_api import expect
 from ui.pages.base_page import BasePage
-from ui.pages.locators import LoginPageLocators, SignupPageLocators, BasePageLocators
-from ui.pages.main_page import MainPage
+from ui.pages.locators import LoginPageLocators
+from ui.test_data.data import ErrorMessageText
 from ui.tools.faker import fake
 
 load_dotenv()
@@ -15,6 +10,19 @@ load_dotenv()
 
 class LoginPage(BasePage):
     ENDPOINT = os.getenv("LOGIN_ENDPOINT")
+
+    def should_be_login_page(self):
+        self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_FORM)
+        self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_EMAIL_AREA)
+        self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_PASSWORD_AREA)
+        self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_BTN)
+
+        self.elem_should_be_visible(selector=LoginPageLocators.SIGNUP_FORM)
+        self.elem_should_be_visible(selector=LoginPageLocators.SIGNUP_NAME_AREA)
+        self.elem_should_be_visible(selector=LoginPageLocators.SIGNUP_EMAIL_AREA)
+        self.elem_should_be_visible(selector=LoginPageLocators.SIGNUP_BTN)
+        self.check_url()
+
 
     def go_to_signup(self, email=None, name=None):
         email = email or fake.email()
@@ -31,7 +39,7 @@ class LoginPage(BasePage):
         self.click(selector=LoginPageLocators.LOGIN_BTN)
 
     def should_be_incorrect_login_error(self):
-        expect(self.page.get_by_text(LoginPageLocators.INCORRECT_LOGIN_ERROR)).to_be_visible()
+        self.should_be_visible_with_text(ErrorMessageText.INCORRECT_LOGIN_ERROR)
 
     def should_be_incorrect_signup_error(self):
-        expect(self.page.get_by_text(LoginPageLocators.INCORRECT_SIGNUP_ERROR)).to_be_visible()
+        self.should_be_visible_with_text(ErrorMessageText.INCORRECT_SIGNUP_ERROR)

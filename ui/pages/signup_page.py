@@ -8,7 +8,29 @@ load_dotenv()
 
 
 class SignupPage(BasePage):
-    ENDPOINT = os.getenv("signup_endpoint")
+    ENDPOINT = os.getenv("SIGNUP_ENDPOINT")
+
+    def should_be_signup_page(self):
+        self.elem_should_be_visible(selector=SignupPageLocators.TITLE_MR)
+        self.elem_should_be_visible(selector=SignupPageLocators.TITLE_MRS)
+        self.elem_should_be_visible(selector=SignupPageLocators.NAME)
+        self.elem_should_be_visible(selector=SignupPageLocators.PASSWORD)
+        self.elem_should_be_visible(selector=SignupPageLocators.DAYS)
+        self.elem_should_be_visible(selector=SignupPageLocators.MONTHS)
+        self.elem_should_be_visible(selector=SignupPageLocators.YEAR)
+        self.elem_should_be_visible(selector=SignupPageLocators.FIRST_NAME)
+        self.elem_should_be_visible(selector=SignupPageLocators.LAST_NAME)
+        self.elem_should_be_visible(selector=SignupPageLocators.COMPANY)
+        self.elem_should_be_visible(selector=SignupPageLocators.ADDRESS)
+        self.elem_should_be_visible(selector=SignupPageLocators.ADDRESS2)
+        self.elem_should_be_visible(selector=SignupPageLocators.COUNTRY)
+        self.elem_should_be_visible(selector=SignupPageLocators.STATE)
+        self.elem_should_be_visible(selector=SignupPageLocators.CITY)
+        self.elem_should_be_visible(selector=SignupPageLocators.ZIPCODE)
+        self.elem_should_be_visible(selector=SignupPageLocators.MOBILE_NUMBER)
+        self.elem_should_be_visible(selector=SignupPageLocators.CREATE_ACCOUNT_BTN)
+        self.check_url()
+
 
     def create_user(self):
         data = fake.date_of_birth()
@@ -34,7 +56,7 @@ class SignupPage(BasePage):
 
     def checking_successful_account_creation(self):
         self.check_url(endpoint="/account_created")
-        self.elem_must_be_visible(selector=SignupPageLocators.ACCOUNT_CREATED_MESSAGE)
+        self.elem_should_be_visible(selector=SignupPageLocators.ACCOUNT_CREATED_MESSAGE)
 
     def click_continue(self):
         self.click(selector=SignupPageLocators.CONTINUE_BTN)

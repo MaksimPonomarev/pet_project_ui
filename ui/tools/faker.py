@@ -67,6 +67,11 @@ class Fake:
     def mobile_number(self):
         return self.faker.phone_number()
 
+    def subject(self):
+        return self.faker.sentence(nb_words=7)
+
+    def paragraph(self):
+        return self.faker.paragraph(nb_sentences=20)
 
 fake = Fake(faker=Faker())
 

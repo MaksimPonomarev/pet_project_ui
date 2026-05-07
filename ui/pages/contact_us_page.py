@@ -1,12 +1,11 @@
-import time
-from ui.pages.base_page import BasePage, BASE_URL
 import os
 from dotenv import load_dotenv
-from playwright.sync_api import expect
 from ui.pages.base_page import BasePage
-from ui.pages.locators import LoginPageLocators, SignupPageLocators, BasePageLocators, ContactUsPageLocators
-from ui.pages.main_page import MainPage
+from ui.pages.locators import ContactUsPageLocators
+from ui.test_data.data import SuccessMessageText
 from ui.tools.faker import fake
+from config import settings
+
 
 load_dotenv()
 
@@ -14,11 +13,29 @@ load_dotenv()
 class ContactUsPage(BasePage):
     ENDPOINT = os.getenv("CONTACT_US_ENDPOINT")
 
-    def should_be_contact_us_form(self):
-        expect(self.page.get_by_text(ContactUsPageLocators.GET_IN_TOUCH_TITLE)).to_be_visible()
+    def should_be_contact_us_page(self):
+        self.elem_should_be_visible(selector=ContactUsPageLocators.NAME)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.EMAIL)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.SUBJECT)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.MESSAGE)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.INPUT_FILE)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.SUBMIT_BTN)
+        self.check_url()
 
     def should_be_success_message_send_feedback(self):
-        expect(self.page.elem_must_be_visible(ContactUsPageLocators.SUCCESS_MESSAGE_LOCATOR)).to_be_visible()
-        expect(self.page.get_by_text(ContactUsPageLocators.SUCCESS_MESSAGE_TEXT)).to_be_visible()
+        self.should_be_visible_with_text(text=SuccessMessageText.SUCCESS_MESSAGE_ADD_PRODUCT_TEXT, selector=ContactUsPageLocators.SUCCESS_MESSAGE_LOCATOR)
+        self.elem_should_be_visible(selector=ContactUsPageLocators.SUCCESS_MESSAGE_LOCATOR)
 
-    def filling_out_the_form(self):
+
+    def submit_contact_form(self):
+        self.enter_data(selector=ContactUsPageLocators.NAME,text=fake.name())
+        self.enter_data(selector=ContactUsPageLocators.EMAIL, text=fake.email())
+        self.enter_data(selector=ContactUsPageLocators.SUBJECT, text=fake.subject())
+        self.enter_data(selector=ContactUsPageLocators.MESSAGE, text=fake.paragraph())
+        self.enter_file(selector=ContactUsPageLocators.INPUT_FILE, path_to_file=settings.test_data.image_png_file)
+        self.accept_alert()
+        self.click(selector=ContactUsPageLocators.SUBMIT_BTN)
+
+
+    def click_home_btn_after_submit(self):
+        self.click(selector=ContactUsPageLocators.GO_TO_HOME_BTN)
