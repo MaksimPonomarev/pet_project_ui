@@ -21,6 +21,8 @@ class BasePageLocators:
     IMAGE_OF_CARD = "img[src]"
 
     ADD_TO_CART_BTN = ".productinfo .add-to-cart"
+    ADD_TO_CART_BTN_ON_HOVER = ".overlay-content .add-to-cart"
+    CART_MODAL_AFTER_ADD_PRODUCT = "#cartModal"
     ITEM_PRICE = ".productinfo h2"
     ITEM_NAME = ".productinfo p"
     VIEW_PRODUCT_DETAILS_BTN = ".nav-pills.nav-justified a"
@@ -32,6 +34,7 @@ class BasePageLocators:
     FOOTER_SUBSCRIBE_BTN = "#subscribe"
     FOOTER_SUCCESS_SUBSCRIBE_MESSAGE = "#success-subscribe"
 
+    PRODUCT_OVERLAY = ".product-overlay"
     ID_CARD_LOCATOR = ".productinfo a"
     ID_CARD_ATTRIBUTE = "data-product-id"
 
@@ -53,6 +56,10 @@ class LeftSidebarLocators:
     @staticmethod
     def category_group(category):
         return f"[data-parent='#accordian'][href='#{category}']"
+
+    @staticmethod
+    def opened_category_group(category):
+        return f"#{category.value}.in"
 
     BRANDS = ".brands_products"
 

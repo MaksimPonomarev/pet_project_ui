@@ -9,7 +9,7 @@ class CheckoutPage(BasePage):
     ENDPOINT = "/checkout"
 
     def should_be_checkout_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.elem_should_be_visible(selector=CheckoutPageLocators.ADDRESS_DELIVERY)
         self.elem_should_be_visible(selector=CheckoutPageLocators.ADDRESS_INVOICE)

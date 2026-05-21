@@ -7,11 +7,11 @@ class DeleteAccountPage(BasePage):
     ENDPOINT = "/delete_account"
 
     def should_be_deleted_account_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.should_be_visible_with_text(selector=DeleteAccountPageLocators.ACCOUNT_DELETED_BLOCK, text=Titles.DELETED_ACCOUNT)
         self.should_be_visible_with_text(selector=DeleteAccountPageLocators.ACCOUNT_DELETED_BLOCK, text=SuccessMessageText.DELETED_ACCOUNT)
-        self.should_be_logged_out()
+        self.header.should_be_logged_out()
 
 
     def click_continue(self):

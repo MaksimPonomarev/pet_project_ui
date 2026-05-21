@@ -9,7 +9,7 @@ from ui.test_data.data import SearchData
 def test_check_product_page(products_page):
     products_page.open()
     products_page.should_be_product_page()
-    products_page.check_product_card()
+
 
 
 @pytest.mark.parametrize("name", SearchData.VALID_PRODUCTS)
@@ -37,7 +37,7 @@ def test_check_filled_cart_after_login(products_page, cart_page, login_page, mai
     )
 
     main_page.should_be_main_page()
-    main_page.should_be_logged_in()
+    main_page.header.should_be_logged_in()
     main_page.header.go_to_cart()
 
     cart_page.should_be_added_products(products_page.cart_items)

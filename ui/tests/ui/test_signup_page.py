@@ -12,7 +12,7 @@ def test_guest_can_create_account(login_page, signup_page,main_page, created_acc
     created_account_page.should_be_success_created_account()
     signup_page.click_continue()
     main_page.should_be_main_page()
-    main_page.should_be_logged_in()
+    main_page.header.should_be_logged_in()
 
 def test_login_user_with_correct_email_and_password(login_page, user_with_cleanup):
     login_page.open()
@@ -21,7 +21,7 @@ def test_login_user_with_correct_email_and_password(login_page, user_with_cleanu
         email=user_with_cleanup.email,
         password=user_with_cleanup.password
     )
-    login_page.should_be_logged_in()
+    login_page.header.should_be_logged_in()
 
 
 def test_login_user_with_incorrect_email_and_password(login_page):

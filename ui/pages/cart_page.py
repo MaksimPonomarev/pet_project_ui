@@ -1,7 +1,8 @@
+import time
 from asyncio import timeout
 
 from ui.pages.base_page import BasePage
-from ui.pages.locators import CartPageLocators, CartItemLocators
+from ui.pages.locators import CartPageLocators, CartItemLocators, BasePageLocators
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
 
@@ -9,14 +10,14 @@ class CartPage(BasePage):
     ENDPOINT = "/view_cart"
 
     def should_be_empty_cart(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.elem_should_be_visible(selector=CartPageLocators.BREADCRUMB)
         self.elem_should_be_visible(selector=CartPageLocators.EMPTY_CART)
 
 
     def should_be_filled_cart(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.elem_should_be_visible(selector=CartPageLocators.CART_INFO)
         self.elem_should_be_visible(selector=CartPageLocators.CHECKOUT_BTN)
@@ -57,16 +58,11 @@ class CartPage(BasePage):
         self.should_not_be_visible(selector=CartItemLocators.id_card(product_id))
 
     def go_to_login_page_from_checkout_form(self):
-        self.click(CartPageLocators.CHECKOUT_BTN)
+        self.click_checkout_btn()
         self.click(CartPageLocators.LOGIN_LINK_IN_CHECKOUT)
 
     def click_checkout_btn(self):
         self.click(CartPageLocators.CHECKOUT_BTN)
-        try:
-            self.not_to_have_url(timeout=2000)
-        except AssertionError:
-            self.click(CartPageLocators.CHECKOUT_BTN)
-
 
     def delete_product_by_id(self, product_id: int):
         self.click(selector=CartPageLocators.delete_product_btn(product_id))

@@ -8,7 +8,7 @@ class PaymentDonePage(BasePage):
     ENDPOINT = "/payment_done"
 
     def should_be_payment_done_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.should_be_success_message(selector=PaymentDonePageLocators.ORDER_PLACED, text=SuccessMessageText.PLACE_ORDER)
         self.elem_should_be_visible(selector=PaymentDonePageLocators.DOWNLOAD_INVOICE_BTN)

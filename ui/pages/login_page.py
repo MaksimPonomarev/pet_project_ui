@@ -10,7 +10,7 @@ class LoginPage(BasePage):
     ENDPOINT = "/login"
 
     def should_be_login_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_FORM)
         self.elem_should_be_visible(selector=LoginPageLocators.LOGIN_EMAIL_AREA)

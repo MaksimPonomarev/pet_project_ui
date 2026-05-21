@@ -41,6 +41,8 @@ class CategoryGroup(Enum):
     MEN = "Men"
     KIDS = "Kids"
 
+
+
 class BaseSubcategory(Enum):
     @property
     def id(self):
@@ -65,7 +67,11 @@ class KidsSubcategory(BaseSubcategory):
     DRESS = (4, "Kids - Dress")
     TOPS_AND_TSHIRT = (5, "Kids - Tops & Shirts")
 
-
+CATEGORY_SUBCATEGORIES = {
+    CategoryGroup.WOMEN: WomenSubcategory,
+    CategoryGroup.MEN: MenSubcategory,
+    CategoryGroup.KIDS: KidsSubcategory,
+}
 
 class Brands(Enum):
     POLO = "Polo"

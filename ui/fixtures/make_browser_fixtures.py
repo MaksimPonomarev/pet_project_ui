@@ -14,7 +14,7 @@ def get_page_with_context(request: pytest.FixtureRequest):
     with sync_playwright() as p:
         headless = request.config.getoption("--headless")
         browser = p.chromium.launch(headless=headless, slow_mo=settings.slow_mo)
-        context = browser.new_context(storage_state="./ui/storage_state.json")
+        context = browser.new_context()
         context.route(
             re.compile(r"(googlesyndication|doubleclick|google-analytics|adservice)"),
             lambda route: route.abort()

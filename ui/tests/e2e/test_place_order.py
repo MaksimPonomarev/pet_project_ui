@@ -24,7 +24,7 @@ def test_register_while_checkout(account_user_info, products_page, main_page, ca
     created_account_page.click_continue()
 
     main_page.should_be_main_page()
-    main_page.should_be_logged_in()
+    main_page.header.should_be_logged_in()
     main_page.header.go_to_cart()
 
     cart_page.click_checkout_btn()
@@ -40,7 +40,7 @@ def test_register_while_checkout(account_user_info, products_page, main_page, ca
     payment_done_page.should_be_payment_done_page()
     file_info = payment_done_page.download_invoice()
     payment_done_page.should_be_downloaded_file(file_info=file_info)
-    payment_done_page.delete_account()
+    payment_done_page.header.delete_account()
 
     deleted_account_page.should_be_deleted_account_page()
     deleted_account_page.click_continue()
@@ -64,7 +64,7 @@ def test_register_before_checkout(account_user_info, products_page, main_page, c
     created_account_page.click_continue()
 
     main_page.should_be_main_page()
-    main_page.should_be_logged_in()
+    main_page.header.should_be_logged_in()
     main_page.add_product_to_cart()
     main_page.header.go_to_cart()
 
@@ -82,7 +82,7 @@ def test_register_before_checkout(account_user_info, products_page, main_page, c
     payment_page.fill_payment_form()
 
     payment_done_page.should_be_payment_done_page()
-    payment_done_page.delete_account()
+    payment_done_page.header.delete_account()
 
     deleted_account_page.should_be_deleted_account_page()
     deleted_account_page.click_continue()
@@ -101,7 +101,7 @@ def test_login_before_checkout(user,  deleted_account_page, payment_done_page, p
         email=user_data.email,
         password=user_data.password
     )
-    login_page.should_be_logged_in()
+    login_page.header.should_be_logged_in()
     login_page.header.go_to_products()
 
     products_page.should_be_product_page()
@@ -121,7 +121,7 @@ def test_login_before_checkout(user,  deleted_account_page, payment_done_page, p
     payment_page.fill_payment_form()
 
     payment_done_page.should_be_payment_done_page()
-    payment_done_page.delete_account()
+    payment_done_page.header.delete_account()
 
     deleted_account_page.should_be_deleted_account_page()
     deleted_account_page.click_continue()

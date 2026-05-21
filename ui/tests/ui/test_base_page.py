@@ -17,9 +17,9 @@ def test_logout(login_page, main_page, user_with_cleanup):
         email=user_data.email,
         password=user_data.password
     )
-    login_page.should_be_logged_in()
-    login_page.logout()
-    main_page.should_be_logged_out()
+    login_page.header.should_be_logged_in()
+    login_page.header.logout()
+    main_page.header.should_be_logged_out()
 
 
 def test_go_to_products_page(main_page, products_page):
@@ -109,8 +109,8 @@ def test_check_footer(page_fixture, request):
 def test_scroll_button(main_page):
     main_page.open()
     main_page.should_be_main_page()
-    main_page.should_be_header_visible(visible=True)
+    main_page.header.should_be_header_visible(visible=True)
     main_page.footer.scroll_to_footer()
-    main_page.should_be_header_visible(visible=False)
+    main_page.header.should_be_header_visible(visible=False)
     main_page.click_scroll_up_btn()
-    main_page.should_be_header_visible(visible=True)
+    main_page.header.should_be_header_visible(visible=True)

@@ -13,13 +13,13 @@ class MainPage(BasePage):
     ENDPOINT = "/"
     
     def should_be_main_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.elem_should_be_visible(selector=MainPageLocators.CAROUSEL_SLIDER)
         self.elem_should_be_visible(selector=LeftSidebarLocators.LEFT_SIDEBAR)
-        self.first_elem_should_be_visible(selector=MainPageLocators.CARD_OF_ITEM)
+        self.elem_should_be_visible(selector=MainPageLocators.CARD_OF_ITEM)
         self.elem_should_be_visible(selector=MainPageLocators.RECOMMENDED_ITEMS_BLOCK)
-        self.first_elem_should_be_visible(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST)
+        self.elem_should_be_visible(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST)
 
 
     def should_be_cookie_banner(self):
@@ -33,5 +33,5 @@ class MainPage(BasePage):
         expect(cookie_banner).to_be_hidden()
 
     def add_recommended_product(self):
-        return self.add_product_to_cart(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST)
+        self.add_product_to_cart(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST, is_hover=False)
 

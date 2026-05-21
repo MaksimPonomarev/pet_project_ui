@@ -7,7 +7,7 @@ class PaymentPage(BasePage):
     ENDPOINT = "/payment"
 
     def should_be_payment_page(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.should_be_payment_form()
 

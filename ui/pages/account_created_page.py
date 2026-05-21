@@ -7,7 +7,7 @@ class CreatedAccountPage(BasePage):
     ENDPOINT = "/account_created"
 
     def should_be_success_created_account(self):
-        self.wait_page_is_functional()
+        
         self.check_url()
         self.should_be_visible_with_text(selector=CreatedAccountPageLocators.ACCOUNT_CREATED_TITLE, text=Titles.CREATED_ACCOUNT)
         self.should_be_visible_inner_text(text=SuccessMessageText.CREATED_ACCOUNT)

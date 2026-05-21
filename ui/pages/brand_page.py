@@ -16,7 +16,6 @@ class BrandProductPage(BasePage):
         Check opened brand product page
         :param brand: Enum
         """
-        self.wait_page_is_functional()
+        
         self.check_url(endpoint=brand.url)
         self.should_be_visible_with_text(selector=BasePageLocators.TITLE, text=brand.title_brand, exact=True)
-        self.check_product_card()

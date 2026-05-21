@@ -39,8 +39,5 @@ class DetailProductsPage(BasePage):
         self.click(selector=BasePageLocators.CONTINUE_SHOPPING_BTN)
 
     def add_detail_product_to_cart(self):
-        self.click_with_retry(
-            click_selector=DetailProductPageLocators.PRODUCT_ADD_TO_CART_BTN,
-            wait_selector=BasePageLocators.CONTINUE_SHOPPING_BTN
-        )
+        self.click(selector=DetailProductPageLocators.PRODUCT_ADD_TO_CART_BTN)
         self.click_continue()
