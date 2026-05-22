@@ -1,6 +1,8 @@
-class BasePageLocators:
-    IMG_LOGO_SITE = "img[src='/static/images/home/logo.png']"
+# ── shared / reusable ─────────────────────────────────────────────────────────
+
+class NavLocators:
     HEADER = "#header"
+    IMG_LOGO_SITE = "img[src='/static/images/home/logo.png']"
 
     HOME_LINK = "li a[href='/']"
     PRODUCTS_LINK = "li a[href='/products']"
@@ -11,12 +13,19 @@ class BasePageLocators:
     VIDEO_TUTORIALS_LINK = "li a[href='https://www.youtube.com/c/AutomationExercise']"
     CONTACT_US_LINK = "li a[href='/contact_us']"
 
-    #если залогинен появится\изменятся
     LOGOUT_LINK = "li a[href='/logout']"
     DELETE_ACCOUNT_LINK = "li a[href='/delete_account']"
 
-    CONTINUE_SHOPPING_BTN = ".modal.show .close-modal"
 
+class FooterLocators:
+    FOOTER = "#footer .single-widget"
+    FOOTER_TITLE = "#footer .single-widget h2"
+    FOOTER_EMAIL = "#susbscribe_email"
+    FOOTER_SUBSCRIBE_BTN = "#subscribe"
+    FOOTER_SUCCESS_SUBSCRIBE_MESSAGE = "#success-subscribe"
+
+
+class ProductCardLocators:
     CARD_OF_ITEM = ".product-image-wrapper"
     IMAGE_OF_CARD = "img[src]"
 
@@ -28,49 +37,75 @@ class BasePageLocators:
     VIEW_PRODUCT_DETAILS_BTN = ".nav-pills.nav-justified a"
     TITLE = ".title.text-center"
 
-    FOOTER = "#footer .single-widget"
-    FOOTER_TITLE = "#footer .single-widget h2"
-    FOOTER_EMAIL = "#susbscribe_email"
-    FOOTER_SUBSCRIBE_BTN = "#subscribe"
-    FOOTER_SUCCESS_SUBSCRIBE_MESSAGE = "#success-subscribe"
-
     PRODUCT_OVERLAY = ".product-overlay"
     ID_CARD_LOCATOR = ".productinfo a"
     ID_CARD_ATTRIBUTE = "data-product-id"
 
-    BREADCRUMB = ".breadcrumb"
+    @staticmethod
+    def select_card_by_id(product_id: int) -> str:
+        return f"[data-product-id='{product_id}']"
 
-    CONTINUE_BTN = "[data-qa='continue-button']"
 
-    SCROLL_UP_BTN = "#scrollUp"
+class CartItemLocators:
+    CART_INFO = "#cart_info"
 
     @staticmethod
-    def select_card_by_id(card_id):
-        return f"[data-product-id='{card_id}']"
+    def id_card(product_id: int) -> str:
+        return f"#product-{product_id}"
+
+    @staticmethod
+    def product_price(product_id: int) -> str:
+        return f"#product-{product_id} .cart_price p"
+
+    @staticmethod
+    def product_total_price(product_id: int) -> str:
+        return f"#product-{product_id} .cart_total_price"
+
+    @staticmethod
+    def product_quantity(product_id: int) -> str:
+        return f"#product-{product_id} .cart_quantity"
+
+    @staticmethod
+    def product_name(product_id: int) -> str:
+        return f"#product-{product_id} .cart_description h4"
+
+    @staticmethod
+    def product_category(product_id: int) -> str:
+        return f"#product-{product_id} .cart_description p"
+
 
 class LeftSidebarLocators:
     LEFT_SIDEBAR = ".left-sidebar"
-
     CATEGORY = ".category-products#accordian"
-
-    @staticmethod
-    def category_group(category):
-        return f"[data-parent='#accordian'][href='#{category}']"
-
-    @staticmethod
-    def opened_category_group(category):
-        return f"#{category.value}.in"
-
     BRANDS = ".brands_products"
 
     @staticmethod
-    def brand_item(brand):
+    def category_group(category: str) -> str:
+        return f"[data-parent='#accordian'][href='#{category}']"
+
+    @staticmethod
+    def opened_category_group(category) -> str:
+        return f"#{category.value}.in"
+
+    @staticmethod
+    def brand_item(brand: str) -> str:
         return f"li a[href='/brand_products/{brand}']"
 
     @staticmethod
-    def subcategory(subcategory):
+    def subcategory(subcategory: int) -> str:
         return f"li a[href='/category_products/{subcategory}']"
 
+
+# ── base page ─────────────────────────────────────────────────────────────────
+
+class BasePageLocators(NavLocators, FooterLocators, ProductCardLocators):
+    BREADCRUMB = ".breadcrumb"
+    CONTINUE_BTN = "[data-qa='continue-button']"
+    CONTINUE_SHOPPING_BTN = ".modal.show .close-modal"
+    SCROLL_UP_BTN = "#scrollUp"
+
+
+# ── page-specific ─────────────────────────────────────────────────────────────
 
 class MainPageLocators(BasePageLocators):
     CAROUSEL_SLIDER = "#slider-carousel.carousel.slide"
@@ -82,7 +117,7 @@ class MainPageLocators(BasePageLocators):
 
 class LoginPageLocators(BasePageLocators):
     LOGIN_FORM = ".login-form"
-    LOGIN_EMAIL_AREA= "[data-qa=login-email]"
+    LOGIN_EMAIL_AREA = "[data-qa=login-email]"
     LOGIN_PASSWORD_AREA = "[data-qa=login-password]"
     LOGIN_BTN = "[data-qa=login-button]"
 
@@ -90,7 +125,6 @@ class LoginPageLocators(BasePageLocators):
     SIGNUP_NAME_AREA = "[data-qa=signup-name]"
     SIGNUP_EMAIL_AREA = "[data-qa=signup-email]"
     SIGNUP_BTN = "[data-qa=signup-button]"
-
 
 
 class SignupPageLocators(BasePageLocators):
@@ -115,7 +149,6 @@ class SignupPageLocators(BasePageLocators):
     CREATE_ACCOUNT_BTN = "[data-qa=create-account]"
 
 
-
 class CreatedAccountPageLocators(BasePageLocators):
     ACCOUNT_CREATED_TITLE = "[data-qa=account-created]"
 
@@ -130,14 +163,16 @@ class ContactUsPageLocators(BasePageLocators):
     SUCCESS_MESSAGE_LOCATOR = ".status.alert.alert-success"
     GO_TO_HOME_BTN = "#form-section .btn.btn-success"
 
+
 class TestCasesLocators(BasePageLocators):
-    first_TEST_CASE = "a[data-toggle='collapse'][href]"
+    FIRST_TEST_CASE = "a[data-toggle='collapse'][href]"
 
 
 class ProductsPageLocators(BasePageLocators):
     ADVERTISEMENT = "#advertisement"
     SEARCH_PRODUCT = "#search_product"
     SUBMIT_SEARCH_BTN = "#submit_search[type='button']"
+
 
 class DetailProductPageLocators(BasePageLocators):
     PRODUCT_DETAILS = ".product-details"
@@ -152,43 +187,16 @@ class DetailProductPageLocators(BasePageLocators):
     REVIEW_WRITE_FORM = ".category-tab.shop-details-tab"
     REVIEW_NAME = "#name"
     REVIEW_EMAIL = "#email"
-    REVIEW_TEXTAREA_REVIEW= "textarea#review"
+    REVIEW_TEXTAREA_REVIEW = "textarea#review"
     REVIEW_SUBMIT_BTN = "#button-review"
 
     ITEM_ID_LOCATOR = "#product_id"
     ITEM_ID_ATTRIBUTE = "value"
 
+
 class ApiPageLocators(BasePageLocators):
     PANEL_HEADING = ".panel-heading"
 
-
-
-class CartItemLocators:
-    CART_INFO = "#cart_info"
-
-    @staticmethod
-    def id_card(product_id):
-        return f"#product-{product_id}"
-
-    @staticmethod
-    def product_price(product_id):
-        return f"#product-{product_id} .cart_price p"
-
-    @staticmethod
-    def product_total_price(product_id):
-        return f"#product-{product_id} .cart_total_price"
-
-    @staticmethod
-    def product_quantity(product_id):
-        return f"#product-{product_id} .cart_quantity"
-
-    @staticmethod
-    def product_name(product_id):
-        return f"#product-{product_id} .cart_description h4"
-
-    @staticmethod
-    def product_category(product_id):
-        return f"#product-{product_id} .cart_description p"
 
 class CartPageLocators(BasePageLocators, CartItemLocators):
     EMPTY_CART = "#empty_cart"
@@ -196,40 +204,35 @@ class CartPageLocators(BasePageLocators, CartItemLocators):
     CHECKOUT_MODAL = "#checkoutModal"
     LOGIN_LINK_IN_CHECKOUT = "#checkoutModal [href='/login']"
 
-
     @staticmethod
-    def delete_product_btn(product_id):
+    def delete_product_btn(product_id: int) -> str:
         return f"#product-{product_id} .cart_quantity_delete"
 
 
 class CheckoutPageLocators(BasePageLocators, CartItemLocators):
     ADDRESS_DELIVERY = "#address_delivery"
     ADDRESS_INVOICE = "#address_invoice"
-
     NAME = ".address_firstname.address_lastname"
-    ADDRESS = ...
 
     ORDER_ADD_INFO = "#ordermsg"
-    ORDER_ADD_INFO_PLACE= "#ordermsg [name='message']"
+    ORDER_ADD_INFO_PLACE = "#ordermsg [name='message']"
     PLACE_ORDER_BTN = "[href='/payment']"
     TOTAL_AMOUNT_CART = "[colspan] + td .cart_total_price"
 
 
 class PaymentPageLocators(BasePageLocators):
     PAYMENT_INFO_BLOCK = ".payment-information"
-
     NAME_OF_CARD = "[data-qa='name-on-card']"
     CARD_NUMBER = "[data-qa='card-number']"
     CVC = "[data-qa='cvc']"
     EXPIRY_MONTH = "[data-qa='expiry-month']"
     EXPIRY_YEAR = "[data-qa='expiry-year']"
-
     PAY_AND_CONFIRM_ORDER_BTN = "[data-qa='pay-button']"
+
 
 class PaymentDonePageLocators(BasePageLocators):
     ORDER_PLACED = ".col-sm-9.col-sm-offset-1"
     DOWNLOAD_INVOICE_BTN = ".btn-default.check_out"
-
 
 
 class DeleteAccountPageLocators(BasePageLocators):

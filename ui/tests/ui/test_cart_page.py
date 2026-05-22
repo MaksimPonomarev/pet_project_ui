@@ -22,7 +22,7 @@ def test_check_product_quantity_in_cart(products_page, detail_products_page, car
     products_page.open()
     products_page.should_be_product_page()
     product_id = products_page.get_product_id_from_card()
-    products_page.open_product_card_detail(card_id=product_id)
+    products_page.open_product_card_detail(product_id=product_id)
 
     detail_products_page.should_be_product_detail_page(product_id=product_id)
     detail_products_page.enter_quantity_for_product(quantity=4)

@@ -32,8 +32,8 @@ class BasePage:
         self.page.goto(f"{BASE_URL}{self.ENDPOINT}", timeout=settings.navigation_timeout, wait_until="commit")
         self.wait_for_load_state()
 
-    def check_url(self, endpoint=None, timeout=None):
-        expected_url = f"{BASE_URL}{endpoint or self.ENDPOINT}"
+    def check_url(self, endpoint=None, timeout=None, expected_url=None):
+        expected_url = expected_url or f"{BASE_URL}{endpoint or self.ENDPOINT}"
         expect(self.page).to_have_url(re.compile(rf"{re.escape(expected_url)}(?:#.*)?"),  timeout=timeout or settings.default_timeout)
 
 
@@ -60,6 +60,9 @@ class BasePage:
             expect(locator.locator(selector).filter(has_text=text)).to_be_visible()
         else:
             expect(locator.get_by_text(text)).to_be_visible()
+
+    def scroll_to_elem(self, selector):
+        self.scroll_to_visible_elem(selector=selector)
 
     def accept_alert(self):
         self.page.on("dialog", lambda dialog: dialog.accept())
@@ -107,19 +110,19 @@ class BasePage:
         card = self.page.locator(selector=selector or BasePageLocators.CARD_OF_ITEM).nth(index)
         name = self.get_text_by_locator(selector=BasePageLocators.ITEM_NAME, root=card)
         price = self.get_text_by_locator(selector=BasePageLocators.ITEM_PRICE, root=card)
-        card_id = self.get_text_by_attribute_for_locator(selector=BasePageLocators.ID_CARD_LOCATOR, root=card, attribute=BasePageLocators.ID_CARD_ATTRIBUTE)
+        product_id = self.get_text_by_attribute_for_locator(selector=BasePageLocators.ID_CARD_LOCATOR, root=card, attribute=BasePageLocators.ID_CARD_ATTRIBUTE)
 
         if is_hover:
             self.hover(selector=BasePageLocators.ADD_TO_CART_BTN, root=card)
             self.elem_should_be_visible(selector=BasePageLocators.PRODUCT_OVERLAY, root=card)
-            with self.page.expect_response(re.compile(rf"/add_to_cart/{card_id}")) as response_info:
+            with self.page.expect_response(re.compile(rf"/add_to_cart/{product_id}")) as response_info:
                 self.click(selector=BasePageLocators.ADD_TO_CART_BTN_ON_HOVER, root=card)
 
             response = response_info.value
             assert response.ok, f"Сервер отвалился при добавлении в корзину! Статус: {response.status}"
 
         else:
-            with self.page.expect_response(re.compile(rf"/add_to_cart/{card_id}")) as response_info:
+            with self.page.expect_response(re.compile(rf"/add_to_cart/{product_id}")) as response_info:
                 self.click(selector=BasePageLocators.ADD_TO_CART_BTN, root=card)
 
             response = response_info.value
@@ -128,19 +131,22 @@ class BasePage:
         self.elem_should_be_visible(BasePageLocators.CART_MODAL_AFTER_ADD_PRODUCT)
 
         self.click(selector=BasePageLocators.CONTINUE_SHOPPING_BTN)
-        if card_id in self.cart_items:
-            self.cart_items[card_id]["count"] += 1
+        if product_id in self.cart_items:
+            self.cart_items[product_id]["count"] += 1
         else:
-            self.cart_items[card_id] = {"name": name, "price": price, "count": 1, "card_id": card_id}
-        return card_id
+            self.cart_items[product_id] = {"name": name, "price": price, "count": 1, "product_id": product_id}
+        return product_id
 
     def get_product_id_from_card(self, index=0, selector=None):
         card = self.page.locator(selector=selector or BasePageLocators.CARD_OF_ITEM).nth(index)
-        card_id = self.get_text_by_attribute_for_locator(selector=BasePageLocators.ID_CARD_LOCATOR, root=card, attribute=BasePageLocators.ID_CARD_ATTRIBUTE)
-        return card_id
+        product_id = self.get_text_by_attribute_for_locator(selector=BasePageLocators.ID_CARD_LOCATOR, root=card, attribute=BasePageLocators.ID_CARD_ATTRIBUTE)
+        return product_id
 
     def assert_equal(self, actual, expected):
         assert actual == expected, f"actual = {actual}, expected = {expected}, actual_type = {type(actual)}, expected = {type(expected)}"
+
+    def assert_contains(self, needle , haystack):
+        assert needle in haystack, f"'{needle}' not found in '{haystack}'"
 
     def should_not_be_visible(self, selector):
         expect(self.page.locator(selector)).to_have_count(0)
@@ -148,8 +154,8 @@ class BasePage:
     def should_be_success_message(self, selector, text):
         self.should_be_visible_with_text(selector=selector, text=text)
 
-    def open_product_card_detail(self, card_id):
-        card = self.page.locator(BasePageLocators.CARD_OF_ITEM).filter(has=self.page.locator(BasePageLocators.select_card_by_id(card_id=card_id)))
+    def open_product_card_detail(self, product_id):
+        card = self.page.locator(BasePageLocators.CARD_OF_ITEM).filter(has=self.page.locator(BasePageLocators.select_card_by_id(product_id=product_id)))
         self.click_and_wait_network(selector=BasePageLocators.VIEW_PRODUCT_DETAILS_BTN, root=card)
 
     def scroll_to_visible_elem(self, selector):

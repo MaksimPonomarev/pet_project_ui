@@ -13,12 +13,12 @@ class FooterComponent:
         self.base_page.elem_should_be_visible(BasePageLocators.FOOTER_EMAIL)
         self.base_page.elem_should_be_visible(BasePageLocators.FOOTER_SUBSCRIBE_BTN)
 
-    def check_subscribe_in_footer(self):
+    def fill_and_submit_subscribe_form(self):
         self.base_page.enter_data(selector=BasePageLocators.FOOTER_EMAIL, text=fake.email())
         self.base_page.click(selector=BasePageLocators.FOOTER_SUBSCRIBE_BTN)
 
-    def should_be_footer_subscribe_success(self):
+    def should_be_subscribe_success_message(self):
         self.base_page.should_be_success_message(BasePageLocators.FOOTER_SUCCESS_SUBSCRIBE_MESSAGE, text=SuccessMessageText.FOOTER_SUBSCRIBE)
 
     def scroll_to_footer(self):
-        self.base_page.scroll_to_visible_elem(selector=BasePageLocators.FOOTER)
+        self.base_page.scroll_to_elem(selector=BasePageLocators.FOOTER)

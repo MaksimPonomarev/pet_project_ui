@@ -7,7 +7,7 @@ from playwright.sync_api import expect
 
 def test_check_site_header(main_page):
     main_page.open()
-    main_page.header.should_be_head_of_site()
+    main_page.header.should_be_header ()
 
 
 def test_logout(login_page, main_page, user_with_cleanup):
@@ -84,8 +84,7 @@ def test_go_to_video_tutorials(main_page):
     main_page.open()
     main_page.should_be_main_page()
     main_page.header.go_to_video_tutorials()
-
-    expect(main_page.page).to_have_url(re.compile("youtube"))
+    main_page.should_be_redirect_on_youtube()
 
 
 
@@ -93,7 +92,7 @@ def test_go_to_details_product_from_main_page(main_page, detail_products_page):
     main_page.open()
     main_page.should_be_main_page()
     product_id = main_page.get_product_id_from_card()
-    main_page.open_product_card_detail(card_id=product_id)
+    main_page.open_product_card_detail(product_id=product_id)
 
     detail_products_page.should_be_product_detail_page(product_id=product_id)
 
@@ -102,8 +101,8 @@ def test_check_footer(page_fixture, request):
     page = request.getfixturevalue(page_fixture)
     page.open()
     page.footer.should_be_footer()
-    page.footer.check_subscribe_in_footer()
-    page.footer.should_be_footer_subscribe_success()
+    page.footer.fill_and_submit_subscribe_form()
+    page.footer.should_be_subscribe_success_message ()
 
 
 def test_scroll_button(main_page):

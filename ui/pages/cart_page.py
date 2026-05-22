@@ -1,27 +1,19 @@
-import time
-from asyncio import timeout
-
 from ui.pages.base_page import BasePage
-from ui.pages.locators import CartPageLocators, CartItemLocators, BasePageLocators
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+from ui.pages.locators import CartPageLocators, CartItemLocators
 
 
 class CartPage(BasePage):
     ENDPOINT = "/view_cart"
 
     def should_be_empty_cart(self):
-        
         self.check_url()
         self.elem_should_be_visible(selector=CartPageLocators.BREADCRUMB)
         self.elem_should_be_visible(selector=CartPageLocators.EMPTY_CART)
 
-
     def should_be_filled_cart(self):
-        
         self.check_url()
         self.elem_should_be_visible(selector=CartPageLocators.CART_INFO)
         self.elem_should_be_visible(selector=CartPageLocators.CHECKOUT_BTN)
-
 
     def _parse_price(self, price: str) -> float:
         return float(price.replace("Rs.", "").strip())
@@ -29,16 +21,11 @@ class CartPage(BasePage):
     def get_total_price(self, product_price: str, product_quantity: str) -> float:
         return self._parse_price(product_price) * int(product_quantity)
 
-
     def check_quantity(self, item_id: int, expect_quantity: int):
         actual_quantity = self.get_text_by_locator(selector=CartPageLocators.product_quantity(item_id))
         self.assert_equal(int(actual_quantity), expect_quantity)
 
     def should_be_added_products(self, cart_items: dict):
-        """
-        Check information about the added product
-        :param cart_items: dict
-        """
         assert cart_items, "cart_items пустой"
         for id_product, product_info in cart_items.items():
             self.elem_should_be_visible(selector=CartPageLocators.id_card(id_product))
@@ -47,7 +34,6 @@ class CartPage(BasePage):
             product_price = self.get_text_by_locator(selector=CartPageLocators.product_price(id_product))
             product_quantity = self.get_text_by_locator(selector=CartPageLocators.product_quantity(id_product))
             product_total = self.get_text_by_locator(selector=CartPageLocators.product_total_price(id_product))
-
 
             self.assert_equal(product_info["name"], product_name)
             self.assert_equal(self._parse_price(product_info["price"]), self._parse_price(product_price))

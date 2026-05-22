@@ -35,7 +35,7 @@ def test_register_while_checkout(account_user_info, products_page, main_page, ca
     checkout_page.click_place_order()
 
     payment_page.should_be_payment_page()
-    payment_page.fill_payment_form()
+    payment_page.fill_and_submit_payment_form()
 
     payment_done_page.should_be_payment_done_page()
     file_info = payment_done_page.download_invoice()
@@ -79,7 +79,7 @@ def test_register_before_checkout(account_user_info, products_page, main_page, c
     checkout_page.click_place_order()
 
     payment_page.should_be_payment_page()
-    payment_page.fill_payment_form()
+    payment_page.fill_and_submit_payment_form()
 
     payment_done_page.should_be_payment_done_page()
     payment_done_page.header.delete_account()
@@ -118,7 +118,7 @@ def test_login_before_checkout(user,  deleted_account_page, payment_done_page, p
     checkout_page.click_place_order()
 
     payment_page.should_be_payment_page()
-    payment_page.fill_payment_form()
+    payment_page.fill_and_submit_payment_form()
 
     payment_done_page.should_be_payment_done_page()
     payment_done_page.header.delete_account()

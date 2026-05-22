@@ -1,11 +1,15 @@
 import time
 
+import pytest
 
-def test_check_accept_cookie_banner(main_page_without_context):
-    main_page_without_context.open()
-    main_page_without_context.should_be_cookie_banner()
-    main_page_without_context.accept_cookie_banner()
-    main_page_without_context.should_be_main_page()
+
+@pytest.mark.with_cookie_banner
+def test_check_accept_cookie_banner(main_page):
+    main_page.open()
+    main_page.should_be_cookie_banner()
+    main_page.accept_cookie_banner()
+    main_page.should_not_be_cookie_banner()
+    main_page.should_be_main_page()
 
 
 

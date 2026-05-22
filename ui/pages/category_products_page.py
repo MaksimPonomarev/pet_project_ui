@@ -21,9 +21,3 @@ class CategoryProductPage(BasePage):
         self.check_url(endpoint=self.endpoint_category(subcategory.id))
         self.should_be_visible_with_text(selector=BasePageLocators.TITLE, text=self.title_category(subcategory.title), exact=True)
 
-
-
-
-
-
-

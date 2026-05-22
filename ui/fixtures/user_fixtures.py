@@ -1,17 +1,18 @@
+from typing import Iterator
+
 import httpx
 import pytest
-from ui.test_data.factories import UserFactory
-
+from ui.test_data.factories import UserFactory, UserData
 
 
 @pytest.fixture
-def api_client():
+def api_client() -> Iterator[httpx.Client]:
     with httpx.Client() as client:
         yield client
 
 
 @pytest.fixture
-def user(api_client):
+def user(api_client) -> UserData:
     user_info = UserFactory.create()
 
     response = api_client.post(
@@ -45,7 +46,7 @@ def user(api_client):
 
 
 @pytest.fixture
-def user_with_cleanup(user, api_client):
+def user_with_cleanup(user: UserData, api_client: httpx.Client):
         yield user
 
         response_to_delete = api_client.request(
@@ -62,7 +63,6 @@ def user_with_cleanup(user, api_client):
             raise ValueError(f"Failed to delete user: {delete_data}")
 
 
-
 @pytest.fixture
-def account_user_info():
+def account_user_info() -> UserData:
     return UserFactory.create()

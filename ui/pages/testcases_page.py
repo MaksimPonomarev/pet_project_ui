@@ -6,6 +6,5 @@ class TestCasesPage(BasePage):
     ENDPOINT = "/test_cases"
 
     def should_be_test_cases_page(self):
-        
         self.check_url()
-        self.elem_should_be_visible(selector=TestCasesLocators.first_TEST_CASE)
+        self.elem_should_be_visible(selector=TestCasesLocators.FIRST_TEST_CASE)

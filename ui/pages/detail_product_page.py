@@ -11,7 +11,6 @@ class DetailProductsPage(BasePage):
         self._check_detail_product_info()
         self._check_review_form()
 
-
     def _check_detail_product_info(self):
         self.elem_should_be_visible(selector=DetailProductPageLocators.PRODUCT_DETAILS)
         self.elem_should_be_visible(selector=DetailProductPageLocators.PRODUCT_INFORMATION)
@@ -30,7 +29,6 @@ class DetailProductsPage(BasePage):
         self.elem_should_be_visible(selector=DetailProductPageLocators.REVIEW_EMAIL)
         self.elem_should_be_visible(selector=DetailProductPageLocators.REVIEW_TEXTAREA_REVIEW)
         self.elem_should_be_visible(selector=DetailProductPageLocators.REVIEW_SUBMIT_BTN)
-
 
     def enter_quantity_for_product(self, quantity: int):
         self.enter_data(selector=DetailProductPageLocators.QUANTITY, text=str(quantity))

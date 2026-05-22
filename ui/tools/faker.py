@@ -1,7 +1,7 @@
 import uuid
-
 from faker import Faker
 import random
+
 
 class Fake:
     COUNTRIES = [

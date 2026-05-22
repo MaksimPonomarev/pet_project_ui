@@ -1,50 +1,34 @@
 import re
-
 import pytest
 from playwright.sync_api import sync_playwright
-
 from config import settings
 
 
-@pytest.fixture
-def get_page_with_context(request: pytest.FixtureRequest):
-    """
-    Fixtures made browser with context (skip cookies banner)
-    """
+@pytest.fixture(scope="session")
+def browser(request: pytest.FixtureRequest):
     with sync_playwright() as p:
         headless = request.config.getoption("--headless")
-        browser = p.chromium.launch(headless=headless, slow_mo=settings.slow_mo)
-        context = browser.new_context()
-        context.route(
+        b = p.chromium.launch(headless=headless, slow_mo=settings.slow_mo)
+        yield b
+        b.close()
+
+
+@pytest.fixture
+def context(browser, request: pytest.FixtureRequest):
+    ctx = browser.new_context()
+    if not request.node.get_closest_marker("with_cookie_banner"):
+        ctx.route(
             re.compile(r"(googlesyndication|doubleclick|google-analytics|adservice)"),
             lambda route: route.abort()
         )
-        page = context.new_page()
-        page.set_default_timeout(settings.default_timeout)
-        page.set_default_navigation_timeout(settings.navigation_timeout)
-        try:
-            yield page
-        finally:
-            page.close()
-            context.close()
-            browser.close()
+    yield ctx
+    ctx.close()
 
 
 @pytest.fixture
-def get_page_without_context(request: pytest.FixtureRequest):
-    """
-    Fixtures made browser without context (with cookies banner)
-    """
-    with sync_playwright() as p:
-        headless = request.config.getoption("--headless")
-        browser = p.chromium.launch(headless=headless, slow_mo=settings.slow_mo)
-        context = browser.new_context()
-        page = context.new_page()
-        page.set_default_timeout(settings.default_timeout)
-        page.set_default_navigation_timeout(settings.navigation_timeout)
-        try:
-            yield page
-        finally:
-            page.close()
-            context.close()
-            browser.close()
+def page(context):
+    p = context.new_page()
+    p.set_default_timeout(settings.default_timeout)
+    p.set_default_navigation_timeout(settings.navigation_timeout)
+    yield p
+

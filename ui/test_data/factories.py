@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from ui.tools.faker import fake
 
+
 @dataclass
 class UserData:
     name: str
@@ -21,7 +22,6 @@ class UserData:
     year: int
     title: str
 
-
     def address_fields(self) -> dict:
         return {
             "first_name": self.first_name,
@@ -33,9 +33,6 @@ class UserData:
             "zipcode": self.zipcode,
             "country": self.country,
         }
-
-
-
 
 
 class UserFactory:

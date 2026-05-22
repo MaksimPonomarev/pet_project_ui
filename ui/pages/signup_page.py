@@ -8,7 +8,6 @@ class SignupPage(BasePage):
     ENDPOINT = "/signup"
 
     def should_be_signup_page(self):
-        
         self.check_url()
         self.elem_should_be_visible(selector=SignupPageLocators.TITLE_MR)
         self.elem_should_be_visible(selector=SignupPageLocators.TITLE_MRS)

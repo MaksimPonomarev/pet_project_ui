@@ -18,87 +18,81 @@ from ui.pages.testcases_page import TestCasesPage
 
 
 @pytest.fixture
-def main_page(get_page_with_context):
-    page = MainPage(get_page_with_context)
-    return page
-
-@pytest.fixture
-def main_page_without_context(get_page_without_context):
-    page = MainPage(get_page_without_context)
-    return page
-
-@pytest.fixture
-def signup_page(get_page_with_context):
-    page = SignupPage(get_page_with_context)
-    return page
-
-@pytest.fixture
-def login_page(get_page_with_context):
-    page = LoginPage(get_page_with_context)
-    return page
+def main_page(page):
+    return MainPage(page)
 
 
 @pytest.fixture
-def contact_us_page(get_page_with_context):
-    page = ContactUsPage(get_page_with_context)
-    return page
+def signup_page(page):
+    return SignupPage(page)
+
 
 @pytest.fixture
-def cases_of_test_page(get_page_with_context):
-    page = TestCasesPage(get_page_with_context)
-    return page
+def login_page(page):
+    return LoginPage(page)
+
 
 @pytest.fixture
-def products_page(get_page_with_context):
-    page = ProductsPage(get_page_with_context)
-    return page
+def contact_us_page(page):
+    return ContactUsPage(page)
+    
 
 @pytest.fixture
-def detail_products_page(get_page_with_context):
-    page = DetailProductsPage(get_page_with_context)
-    return page
+def cases_of_test_page(page):
+    return TestCasesPage(page)
+    
 
 @pytest.fixture
-def cart_page(get_page_with_context):
-    page = CartPage(get_page_with_context)
-    return page
+def products_page(page):
+    return ProductsPage(page)
+    
 
 @pytest.fixture
-def api_list_page(get_page_with_context):
-    page = ApiListPage(get_page_with_context)
-    return page
+def detail_products_page(page):
+    return DetailProductsPage(page)
+    
 
 @pytest.fixture
-def checkout_page(get_page_with_context):
-    page = CheckoutPage(get_page_with_context)
-    return page
+def cart_page(page):
+    return CartPage(page)
+    
 
 @pytest.fixture
-def payment_page(get_page_with_context):
-    page = PaymentPage(get_page_with_context)
-    return page
+def api_list_page(page):
+    return ApiListPage(page)
+    
 
 @pytest.fixture
-def payment_done_page(get_page_with_context):
-    page = PaymentDonePage(get_page_with_context)
-    return page
+def checkout_page(page):
+    return CheckoutPage(page)
+    
 
 @pytest.fixture
-def deleted_account_page(get_page_with_context):
-    page = DeleteAccountPage(get_page_with_context)
-    return page
+def payment_page(page):
+    return PaymentPage(page)
+    
 
 @pytest.fixture
-def created_account_page(get_page_with_context):
-    page = CreatedAccountPage(get_page_with_context)
-    return page
+def payment_done_page(page):
+    return PaymentDonePage(page)
+    
 
 @pytest.fixture
-def category_product_page(get_page_with_context):
-    page = CategoryProductPage(get_page_with_context)
-    return page
+def deleted_account_page(page):
+    return DeleteAccountPage(page)
+    
 
 @pytest.fixture
-def brand_product_page(get_page_with_context):
-    page = BrandProductPage(get_page_with_context)
-    return page
+def created_account_page(page):
+    return CreatedAccountPage(page)
+    
+
+@pytest.fixture
+def category_product_page(page):
+    return CategoryProductPage(page)
+    
+
+@pytest.fixture
+def brand_product_page(page):
+    return BrandProductPage(page)
+    

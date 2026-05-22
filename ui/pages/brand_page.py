@@ -4,18 +4,11 @@ from ui.pages.locators import BasePageLocators
 from ui.test_data.data import Brands
 
 class BrandProductPage(BasePage):
-    """
-    Class for interaction with /brand_products/{brand}
-    """
+
     def __init__(self, page):
         super().__init__(page)
         self.sidebar = LeftSidebarComponent(self)
 
     def should_be_brand_products_page(self, brand: Brands):
-        """
-        Check opened brand product page
-        :param brand: Enum
-        """
-        
         self.check_url(endpoint=brand.url)
         self.should_be_visible_with_text(selector=BasePageLocators.TITLE, text=brand.title_brand, exact=True)

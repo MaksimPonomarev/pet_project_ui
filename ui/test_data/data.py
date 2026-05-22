@@ -1,8 +1,18 @@
 from enum import Enum
 from urllib.parse import quote
 
+
 class HeaderSite:
-    LOGGEN_IN_TEXT = "Logged in"
+    LOGGED_IN_TEXT = "Logged in"
+    HOME = "Home"
+    PRODUCTS = "Products"
+    CART = "Cart"
+    SIGNUP_LOGIN = "Signup / Login"
+    TEST_CASES = "Test Cases"
+    API_TESTING = "API Testing"
+    VIDEO_TUTORIALS = "Video Tutorials"
+    CONTACT_US = "Contact us"
+
 
 class ErrorMessageText:
     INCORRECT_LOGIN_ERROR = "Your email or password is incorrect!"
@@ -30,17 +40,15 @@ class SuccessMessageText:
     PLACE_ORDER = "Congratulations! Your order has been confirmed!"
     DELETED_ACCOUNT = "Your account has been permanently deleted!"
 
+
 class SearchData:
     VALID_PRODUCTS = ["Sleeveless Dress", "Men Tshirt", "Sleeves Top and Short - Blue & Pink"]
-
-
 
 
 class CategoryGroup(Enum):
     WOMEN = "Women"
     MEN = "Men"
     KIDS = "Kids"
-
 
 
 class BaseSubcategory(Enum):
@@ -51,6 +59,7 @@ class BaseSubcategory(Enum):
     @property
     def title(self):
         return self.value[1]
+
 
 class WomenSubcategory(BaseSubcategory):
     DRESS = (1, "Women - Dress")
@@ -67,11 +76,13 @@ class KidsSubcategory(BaseSubcategory):
     DRESS = (4, "Kids - Dress")
     TOPS_AND_TSHIRT = (5, "Kids - Tops & Shirts")
 
+
 CATEGORY_SUBCATEGORIES = {
     CategoryGroup.WOMEN: WomenSubcategory,
     CategoryGroup.MEN: MenSubcategory,
     CategoryGroup.KIDS: KidsSubcategory,
 }
+
 
 class Brands(Enum):
     POLO = "Polo"

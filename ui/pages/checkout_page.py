@@ -1,6 +1,5 @@
 from ui.pages.base_page import BasePage
 from ui.pages.locators import CheckoutPageLocators
-from ui.pages.types import UserInfo
 from ui.test_data.factories import UserData
 from ui.tools.faker import fake
 
@@ -9,7 +8,6 @@ class CheckoutPage(BasePage):
     ENDPOINT = "/checkout"
 
     def should_be_checkout_page(self):
-        
         self.check_url()
         self.elem_should_be_visible(selector=CheckoutPageLocators.ADDRESS_DELIVERY)
         self.elem_should_be_visible(selector=CheckoutPageLocators.ADDRESS_INVOICE)
@@ -23,8 +21,8 @@ class CheckoutPage(BasePage):
         delivery_text = self.get_inner_text(root=address_delivery)
         invoice_text = self.get_inner_text(root=address_invoice)
         for value in user_data.address_fields().values():
-            assert value in delivery_text, f"value = {value}"
-            assert value in invoice_text, f"value = {value}"
+            self.assert_contains(needle=value, haystack=delivery_text)
+            self.assert_contains(needle=value, haystack=invoice_text)
 
     def fill_comment(self):
         self.enter_data(selector=CheckoutPageLocators.ORDER_ADD_INFO_PLACE, text=fake.paragraph())
