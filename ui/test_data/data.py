@@ -39,7 +39,7 @@ class SuccessMessageText:
     FOOTER_SUBSCRIBE = "You have been successfully subscribed!"
     PLACE_ORDER = "Congratulations! Your order has been confirmed!"
     DELETED_ACCOUNT = "Your account has been permanently deleted!"
-
+    PRODUCT_REVIEW = "Thank you for your review."
 
 class SearchData:
     VALID_PRODUCTS = ["Sleeveless Dress", "Men Tshirt", "Sleeves Top and Short - Blue & Pink"]
@@ -53,11 +53,11 @@ class CategoryGroup(Enum):
 
 class BaseSubcategory(Enum):
     @property
-    def id(self):
+    def id(self) -> str:
         return self.value[0]
 
     @property
-    def title(self):
+    def title(self) -> str:
         return self.value[1]
 
 
@@ -95,9 +95,9 @@ class Brands(Enum):
     BIBA = "Biba"
 
     @property
-    def url(self):
-        return f"/brand_products/{quote(self.value, safe="")}"
+    def url(self) -> str:
+        return f"/brand_products/{quote(self.value, safe='')}"
 
     @property
-    def title_brand(self):
+    def title_brand(self) -> str:
         return f"Brand - {self.value} Products"

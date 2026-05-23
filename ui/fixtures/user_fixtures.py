@@ -66,3 +66,13 @@ def user_with_cleanup(user: UserData, api_client: httpx.Client):
 @pytest.fixture
 def account_user_info() -> UserData:
     return UserFactory.create()
+
+
+@pytest.fixture
+def logged_in_user(login_page, user) -> UserData:
+    login_page.open()
+    login_page.login(
+        email=user.email,
+        password=user.password
+    )
+    return user

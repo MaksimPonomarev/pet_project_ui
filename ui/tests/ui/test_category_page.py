@@ -1,5 +1,3 @@
-import time
-
 from ui.test_data.data import CategoryGroup, WomenSubcategory, MenSubcategory
 
 

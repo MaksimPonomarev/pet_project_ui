@@ -151,7 +151,7 @@ class SignupPageLocators(BasePageLocators):
 
 class CreatedAccountPageLocators(BasePageLocators):
     ACCOUNT_CREATED_TITLE = "[data-qa=account-created]"
-
+    SUCCESS_MESSAGE = "#form .col-sm-9.col-sm-offset-1"
 
 class ContactUsPageLocators(BasePageLocators):
     NAME = "[data-qa=name]"
@@ -192,6 +192,8 @@ class DetailProductPageLocators(BasePageLocators):
 
     ITEM_ID_LOCATOR = "#product_id"
     ITEM_ID_ATTRIBUTE = "value"
+
+    SUCCESS_MESSAGE = "#review-section .alert-success"
 
 
 class ApiPageLocators(BasePageLocators):
@@ -235,5 +237,5 @@ class PaymentDonePageLocators(BasePageLocators):
     DOWNLOAD_INVOICE_BTN = ".btn-default.check_out"
 
 
-class DeleteAccountPageLocators(BasePageLocators):
+class DeletedAccountPageLocators(BasePageLocators):
     ACCOUNT_DELETED_BLOCK = ".col-sm-9.col-sm-offset-1"

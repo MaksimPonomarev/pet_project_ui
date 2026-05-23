@@ -6,7 +6,7 @@ from ui.pages.cart_page import CartPage
 from ui.pages.category_products_page import CategoryProductPage
 from ui.pages.checkout_page import CheckoutPage
 from ui.pages.contact_us_page import ContactUsPage
-from ui.pages.delete_account_page import DeleteAccountPage
+from ui.pages.delete_account_page import DeletedAccountPage
 from ui.pages.detail_product_page import DetailProductsPage
 from ui.pages.login_page import LoginPage
 from ui.pages.main_page import MainPage
@@ -79,7 +79,7 @@ def payment_done_page(page):
 
 @pytest.fixture
 def deleted_account_page(page):
-    return DeleteAccountPage(page)
+    return DeletedAccountPage(page)
     
 
 @pytest.fixture

@@ -1,4 +1,3 @@
-import time
 
 
 def test_contact_us_form(contact_us_page, main_page):

@@ -22,3 +22,6 @@ class PaymentDonePage(BasePage):
 
     def should_be_downloaded_file(self, file_info: Path):
         assert file_info.stat().st_size > 0
+
+    def click_continue_on_payment_done_page(self):
+        self.click_and_wait_network(selector=PaymentDonePageLocators.CONTINUE_BTN)

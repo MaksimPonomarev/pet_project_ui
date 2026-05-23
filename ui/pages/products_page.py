@@ -11,12 +11,12 @@ class ProductsPage(BasePage):
         self.elem_should_be_visible(selector=ProductsPageLocators.SEARCH_PRODUCT)
         self.elem_should_be_visible(selector=ProductsPageLocators.CARD_OF_ITEM)
 
-    def check_all_results_search_product(self, name_of_product: str):
+    def check_all_results_search_product(self, product_name: str):
         cards = self.page.locator(selector=ProductsPageLocators.CARD_OF_ITEM)
         for i in range(cards.count()):
             card = cards.nth(i)
-            self.should_be_visible_with_text(selector=ProductsPageLocators.ITEM_NAME, text=name_of_product, root=card)
+            self.should_be_visible_with_text(selector=ProductsPageLocators.ITEM_NAME, text=product_name, root=card)
 
-    def enter_and_submit_search(self, name_of_product: str):
-        self.enter_data(selector=ProductsPageLocators.SEARCH_PRODUCT, text=name_of_product)
+    def enter_and_submit_search(self, product_name: str):
+        self.enter_data(selector=ProductsPageLocators.SEARCH_PRODUCT, text=product_name)
         self.click(selector=ProductsPageLocators.SUBMIT_SEARCH_BTN)

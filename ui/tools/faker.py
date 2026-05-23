@@ -20,13 +20,13 @@ class Fake:
     def email(self, domain: str | None = None) -> str:
         return f"{uuid.uuid4()}{self.faker.email(domain=domain)}"
 
-    def password(self):
+    def password(self) -> str:
         return self.faker.password()
 
-    def name(self):
+    def name(self) -> str:
         return self.faker.name()
 
-    def date_of_birth(self):
+    def date_of_birth(self) -> dict:
         dob = self.faker.date_of_birth(minimum_age=18, maximum_age=60)
         return {
             "day": str(dob.day),
@@ -34,58 +34,58 @@ class Fake:
             "year": str(dob.year)
         }
 
-    def title(self):
+    def title(self) -> str:
         return random.choice(["mr", "mrs"])
 
-    def first_name(self):
+    def first_name(self) -> str:
         return self.faker.first_name()
 
-    def last_name(self):
+    def last_name(self) -> str:
         return self.faker.last_name()
 
-    def company(self):
+    def company(self) -> str:
         return self.faker.company()
 
-    def address(self):
+    def address(self) -> str:
         return self.faker.street_address()
 
-    def address2(self):
+    def address2(self) -> str:
         return self.faker.street_address()
 
-    def country(self):
+    def country(self) -> str:
         return random.choice(self.COUNTRIES)
 
-    def state(self):
+    def state(self) -> str:
         return self.faker.state()
 
-    def city(self):
+    def city(self) -> str:
         return self.faker.city()
 
-    def zipcode(self):
+    def zipcode(self) -> str:
         return self.faker.zipcode()
 
-    def mobile_number(self):
+    def mobile_number(self) -> str:
         return self.faker.phone_number()
 
-    def subject(self):
+    def subject(self) -> str:
         return self.faker.sentence(nb_words=7)
 
-    def paragraph(self, sentences=20):
+    def paragraph(self, sentences=20) -> str:
         return self.faker.paragraph(nb_sentences=sentences)
 
-    def quantity(self):
+    def quantity(self) -> int:
         return random.randint(1,100)
 
-    def credit_card_number(self):
+    def credit_card_number(self) -> str:
         return self.faker.credit_card_number()
 
-    def credit_card_security_code(self):
+    def credit_card_security_code(self) -> str:
         return self.faker.credit_card_security_code()
 
-    def credit_card_expire_month(self):
+    def credit_card_expire_month(self) -> str:
         return self.faker.credit_card_expire(date_format="%m")
 
-    def credit_card_expire_year(self):
+    def credit_card_expire_year(self) -> str:
         return self.faker.credit_card_expire(date_format="%Y")
 
 fake = Fake(faker=Faker())

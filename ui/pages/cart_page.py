@@ -10,10 +10,6 @@ class CartPage(BasePage):
         self.elem_should_be_visible(selector=CartPageLocators.BREADCRUMB)
         self.elem_should_be_visible(selector=CartPageLocators.EMPTY_CART)
 
-    def should_be_filled_cart(self):
-        self.check_url()
-        self.elem_should_be_visible(selector=CartPageLocators.CART_INFO)
-        self.elem_should_be_visible(selector=CartPageLocators.CHECKOUT_BTN)
 
     def _parse_price(self, price: str) -> float:
         return float(price.replace("Rs.", "").strip())

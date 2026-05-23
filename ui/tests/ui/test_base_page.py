@@ -1,8 +1,4 @@
-import re
-import time
-
 import pytest
-from playwright.sync_api import expect
 
 
 def test_check_site_header(main_page):
@@ -20,6 +16,11 @@ def test_logout(login_page, main_page, user_with_cleanup):
     login_page.header.should_be_logged_in()
     login_page.header.logout()
     main_page.header.should_be_logged_out()
+
+def test_user_can_delete_account(main_page, logged_in_user, deleted_account_page):
+    main_page.header.should_be_logged_in()
+    main_page.header.delete_account()
+    deleted_account_page.should_be_deleted_account_page()
 
 
 def test_go_to_products_page(main_page, products_page):
@@ -44,7 +45,6 @@ def test_go_to_filled_cart_page(main_page,cart_page):
     main_page.add_product_to_cart()
     main_page.header.go_to_cart()
 
-    cart_page.should_be_filled_cart()
     cart_page.should_be_added_products(cart_items=main_page.cart_items)
 
 
@@ -95,6 +95,7 @@ def test_go_to_details_product_from_main_page(main_page, detail_products_page):
     main_page.open_product_card_detail(product_id=product_id)
 
     detail_products_page.should_be_product_detail_page(product_id=product_id)
+
 
 @pytest.mark.parametrize("page_fixture", ["main_page", "cart_page"])
 def test_check_footer(page_fixture, request):

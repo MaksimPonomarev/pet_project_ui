@@ -1,8 +1,6 @@
 from ui.pages.base_page import BasePage
 from ui.pages.locators import SignupPageLocators
-from ui.pages.types import SignupData
-from ui.test_data.factories import UserData, UserFactory
-
+from ui.test_data.factories import UserData
 
 class SignupPage(BasePage):
     ENDPOINT = "/signup"
@@ -29,7 +27,7 @@ class SignupPage(BasePage):
         self.elem_should_be_visible(selector=SignupPageLocators.CREATE_ACCOUNT_BTN)
 
 
-    def fill_signup_form(self, user_data: UserData):
+    def fill_and_send_signup_form(self, user_data: UserData):
         self.click(selector=SignupPageLocators.TITLE_MR if user_data.title == "mr" else SignupPageLocators.TITLE_MRS)
         self.enter_data(selector=SignupPageLocators.NAME, text=user_data.name)
         self.enter_data(selector=SignupPageLocators.PASSWORD, text=user_data.password)
@@ -48,6 +46,6 @@ class SignupPage(BasePage):
         self.enter_data(selector=SignupPageLocators.MOBILE_NUMBER, text=user_data.mobile_number)
         self.click(selector=SignupPageLocators.CREATE_ACCOUNT_BTN)
 
-    def click_continue(self):
-        self.click(selector=SignupPageLocators.CONTINUE_BTN)
+    def click_continue_on_signup_page(self):
+        self.click_and_wait_network(selector=SignupPageLocators.CONTINUE_BTN)
 

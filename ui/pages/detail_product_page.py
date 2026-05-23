@@ -1,6 +1,8 @@
 from ui.pages.base_page import BasePage
 from ui.pages.locators import DetailProductPageLocators, BasePageLocators
-from ui.test_data.data import ProductDetailData
+from ui.test_data.data import ProductDetailData, SuccessMessageText
+from ui.test_data.factories import UserData
+from ui.tools.faker import fake
 
 
 class DetailProductsPage(BasePage):
@@ -33,9 +35,18 @@ class DetailProductsPage(BasePage):
     def enter_quantity_for_product(self, quantity: int):
         self.enter_data(selector=DetailProductPageLocators.QUANTITY, text=str(quantity))
 
-    def click_continue(self):
-        self.click(selector=BasePageLocators.CONTINUE_SHOPPING_BTN)
+    def click_continue_on_detail_product_page(self):
+        self.click_and_wait_network(selector=BasePageLocators.CONTINUE_SHOPPING_BTN)
 
     def add_detail_product_to_cart(self):
         self.click(selector=DetailProductPageLocators.PRODUCT_ADD_TO_CART_BTN)
-        self.click_continue()
+        self.click_continue_on_detail_product_page()
+
+    def fill_and_send_review_form(self, user_info: UserData):
+        self.enter_data(selector=DetailProductPageLocators.REVIEW_NAME, text=user_info.name)
+        self.enter_data(selector=DetailProductPageLocators.REVIEW_EMAIL, text=user_info.email)
+        self.enter_data(selector=DetailProductPageLocators.REVIEW_TEXTAREA_REVIEW, text=fake.paragraph())
+        self.click(selector=DetailProductPageLocators.REVIEW_SUBMIT_BTN)
+
+    def should_be_success_message_after_send_review_product(self):
+        self.should_be_success_message(selector=DetailProductPageLocators.SUCCESS_MESSAGE, text=SuccessMessageText.PRODUCT_REVIEW)
