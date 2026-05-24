@@ -1,4 +1,6 @@
 import pytest
+
+from models.pages import Pages
 from pages.account_created_page import CreatedAccountPage
 from pages.api_page import ApiListPage
 from pages.brand_page import BrandProductPage
@@ -96,3 +98,29 @@ def category_product_page(page):
 def brand_product_page(page):
     return BrandProductPage(page)
     
+
+
+
+@pytest.fixture
+def pages(main_page, signup_page, login_page, contact_us_page, cases_of_test_page,
+          products_page, detail_products_page, cart_page, api_list_page, checkout_page,
+          payment_page, payment_done_page, deleted_account_page, created_account_page,
+          category_product_page, brand_product_page):
+    return Pages(
+        main=main_page,
+        signup=signup_page,
+        login=login_page,
+        contact_us=contact_us_page,
+        cases_of_test=cases_of_test_page,
+        products=products_page,
+        detail_products=detail_products_page,
+        cart=cart_page,
+        api_list=api_list_page,
+        checkout=checkout_page,
+        payment=payment_page,
+        payment_done=payment_done_page,
+        deleted_account=deleted_account_page,
+        created_account=created_account_page,
+        category_product=category_product_page,
+        brand_product=brand_product_page,
+    )
