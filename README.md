@@ -1,6 +1,6 @@
-Python Automation Framework (UI + API)
+Python Automation Framework UI
 
-Репозиторий с автотестами для UI и API уровней. Проект построен на современных инструментах с акцентом на скорость выполнения и чистоту кода.
+Репозиторий с автотестами для UI уровня. Проект построен на современных инструментах с акцентом на скорость выполнения и чистоту кода.
 
 🛠 Стек технологий
 
@@ -8,12 +8,10 @@ Python Automation Framework (UI + API)
 
 UI тесты: Playwright 
 
-API тесты: HTTPX 
-
 Тестовый движок: Pytest
 
-Отчетность: Allure Report
+Отчетность: Allure Report (в процессе)
 
-CI/CD: GitHub Actions
+CI/CD: GitHub Actions (в процессе)
 
 Тестовый стенд: https://automationexercise.com/
