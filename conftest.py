@@ -1,11 +1,10 @@
 from playwright.sync_api import expect
 from config import settings
 
-
 pytest_plugins = [
-    "ui.fixtures.page_fixtures",
-    "ui.fixtures.make_browser_fixtures",
-    "ui.fixtures.user_fixtures"
+    "fixtures.page_fixtures",
+    "fixtures.make_browser_fixtures",
+    "fixtures.user_fixtures"
 ]
 
 expect.set_options(timeout=settings.default_timeout)
