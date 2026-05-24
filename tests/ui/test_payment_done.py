@@ -1,11 +1,14 @@
+from models.cart_item import CartItem
 
 
 def test_download_invoice(logged_in_user, main_page, cart_page, checkout_page, payment_page, payment_done_page):
+    expected: dict[str, CartItem] = {}
     main_page.should_be_main_page()
-    main_page.add_product_to_cart()
+    main_page.add_product_to_cart(cart_items=expected)
+    
     main_page.header.go_to_cart()
 
-    cart_page.should_be_added_products(cart_items=main_page.cart_items)
+    cart_page.should_be_added_products(cart_items=expected)
     cart_page.click_checkout_btn()
 
     checkout_page.should_be_checkout_page()

@@ -50,27 +50,27 @@ class CartItemLocators:
     CART_INFO = "#cart_info"
 
     @staticmethod
-    def id_card(product_id: int) -> str:
+    def id_card(product_id: str) -> str:
         return f"#product-{product_id}"
 
     @staticmethod
-    def product_price(product_id: int) -> str:
+    def product_price(product_id: str) -> str:
         return f"#product-{product_id} .cart_price p"
 
     @staticmethod
-    def product_total_price(product_id: int) -> str:
+    def product_total_price(product_id: str) -> str:
         return f"#product-{product_id} .cart_total_price"
 
     @staticmethod
-    def product_quantity(product_id: int) -> str:
+    def product_quantity(product_id: str) -> str:
         return f"#product-{product_id} .cart_quantity"
 
     @staticmethod
-    def product_name(product_id: int) -> str:
+    def product_name(product_id: str) -> str:
         return f"#product-{product_id} .cart_description h4"
 
     @staticmethod
-    def product_category(product_id: int) -> str:
+    def product_category(product_id: str) -> str:
         return f"#product-{product_id} .cart_description p"
 
 

@@ -1,5 +1,7 @@
 import pytest
 
+from models.cart_item import CartItem
+
 
 def test_check_product_page(products_page):
     products_page.open()
@@ -15,13 +17,15 @@ def test_check_search_product(products_page, product_name):
 
 
 def test_check_filled_cart_after_login(products_page, cart_page, login_page, main_page, user):
+    expected: dict[str, CartItem] = {}
     user_data = user
     products_page.open()
     products_page.should_be_product_page()
-    products_page.add_product_to_cart()
+    products_page.add_product_to_cart(cart_items=expected)
+    
     products_page.header.go_to_cart()
 
-    cart_page.should_be_added_products(products_page.cart_items)
+    cart_page.should_be_added_products(cart_items=expected)
     cart_page.header.go_to_login()
 
     login_page.should_be_login_page()
@@ -34,4 +38,4 @@ def test_check_filled_cart_after_login(products_page, cart_page, login_page, mai
     main_page.header.should_be_logged_in()
     main_page.header.go_to_cart()
 
-    cart_page.should_be_added_products()
+    cart_page.should_be_added_products(cart_items=expected)

@@ -1,10 +1,12 @@
 import os
 import re
+from enum import nonmember
 from typing import Any
 from playwright.sync_api import expect, Locator
 from config import settings
 from components.footer_component import FooterComponent
 from components.header_component import HeaderComponent
+from models.cart_item import CartItem
 from pages.locators import BasePageLocators, LeftSidebarLocators
 
 
@@ -15,7 +17,6 @@ class BasePage:
         self.page = page
         self.header = HeaderComponent(self)
         self.footer = FooterComponent(self)
-        self.cart_items = {}
 
     def click(self, selector: str, root: Locator | None = None, force: bool = False):
         locator = root or self.page
@@ -99,7 +100,7 @@ class BasePage:
             self.click(selector=selector, root=root)
         assert response_info.value.ok, f"Сервер отвалился при добавлении в корзину! Статус: {response_info.value.status}"
 
-    def add_product_to_cart(self, index: int = 0, selector: str | None = None, is_hover: bool = True) -> int:
+    def add_product_to_cart(self, cart_items: dict[str, CartItem], index: int = 0, selector: str | None = None, is_hover: bool = True) -> str:
         card = self.page.locator(selector=selector or BasePageLocators.CARD_OF_ITEM).nth(index)
         name = self.get_text_by_locator(selector=BasePageLocators.ITEM_NAME, root=card)
         price = self.get_text_by_locator(selector=BasePageLocators.ITEM_PRICE, root=card)
@@ -115,16 +116,18 @@ class BasePage:
         self.elem_should_be_visible(BasePageLocators.CART_MODAL_AFTER_ADD_PRODUCT)
 
         self.click(selector=BasePageLocators.CONTINUE_SHOPPING_BTN)
-        if product_id in self.cart_items:
-            self.cart_items[product_id]["count"] += 1
-        else:
-            self.cart_items[product_id] = {"name": name, "price": price, "count": 1, "product_id": product_id}
-        return int(product_id)
 
-    def get_product_id_from_card(self, index: int = 0, selector: str = None) -> int:
+        if product_id in cart_items:
+            cart_items[product_id].qty += 1
+        else:
+            cart_items[product_id] = CartItem(id=product_id, name=name, price=price, qty=1)
+
+        return product_id
+
+    def get_product_id_from_card(self, index: int = 0, selector: str = None) -> str:
         card = self.page.locator(selector=selector or BasePageLocators.CARD_OF_ITEM).nth(index)
         product_id = self.get_text_by_attribute_for_locator(selector=BasePageLocators.ID_CARD_LOCATOR, root=card, attribute=BasePageLocators.ID_CARD_ATTRIBUTE)
-        return int(product_id)
+        return product_id
 
     def assert_equal(self, actual: Any, expected: Any):
         assert actual == expected, f"actual = {actual}, expected = {expected}, actual_type = {type(actual)}, expected = {type(expected)}"

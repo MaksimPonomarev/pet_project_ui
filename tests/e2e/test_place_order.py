@@ -1,12 +1,15 @@
+from models.cart_item import CartItem
 
 
 def test_register_while_checkout(account_user_info, products_page, main_page, cart_page, login_page, signup_page, checkout_page, payment_page, payment_done_page, deleted_account_page, created_account_page):
+    expected: dict[str, CartItem] = {}
     main_page.open()
     main_page.should_be_main_page()
-    main_page.add_product_to_cart()
+    main_page.add_product_to_cart(cart_items=expected)
+    
     main_page.header.go_to_cart()
 
-    cart_page.should_be_added_products(cart_items=main_page.cart_items)
+    cart_page.should_be_added_products(cart_items=expected)
     cart_page.go_to_login_page_from_checkout_form()
 
     login_page.should_be_login_page()
@@ -48,6 +51,7 @@ def test_register_while_checkout(account_user_info, products_page, main_page, ca
 
 
 def test_register_before_checkout(account_user_info, main_page, created_account_page, cart_page, login_page, signup_page, checkout_page, payment_page, payment_done_page, deleted_account_page):
+    expected: dict[str, CartItem] = {}
     main_page.open()
     main_page.should_be_main_page()
 
@@ -64,10 +68,11 @@ def test_register_before_checkout(account_user_info, main_page, created_account_
 
     main_page.should_be_main_page()
     main_page.header.should_be_logged_in()
-    main_page.add_product_to_cart()
+    main_page.add_product_to_cart(cart_items=expected)
+    
     main_page.header.go_to_cart()
 
-    cart_page.should_be_added_products(cart_items=main_page.cart_items)
+    cart_page.should_be_added_products(cart_items=expected)
 
     cart_page.click_checkout_btn()
 
@@ -89,6 +94,7 @@ def test_register_before_checkout(account_user_info, main_page, created_account_
 
 
 def test_login_before_checkout(user,  deleted_account_page, payment_done_page, payment_page, checkout_page, main_page, login_page, products_page, cart_page):
+    expected: dict[str, CartItem] = {}
     user_data = user
     main_page.open()
     main_page.should_be_main_page()
@@ -103,10 +109,11 @@ def test_login_before_checkout(user,  deleted_account_page, payment_done_page, p
     login_page.header.go_to_products()
 
     products_page.should_be_product_page()
-    products_page.add_product_to_cart()
+    products_page.add_product_to_cart(cart_items=expected)
+    
     products_page.header.go_to_cart()
 
-    cart_page.should_be_added_products(cart_items=products_page.cart_items)
+    cart_page.should_be_added_products(cart_items=expected)
     cart_page.click_checkout_btn()
 
     checkout_page.should_be_checkout_page()

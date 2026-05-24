@@ -27,8 +27,8 @@ class MainPage(BasePage):
     def accept_cookie_banner(self):
         self.click_and_wait_network(selector=MainPageLocators.ACCEPT_COOKIE_BANNER_BTN)
 
-    def add_recommended_product(self):
-        self.add_product_to_cart(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST, is_hover=False)
+    def add_recommended_product(self, cart_items):
+        self.add_product_to_cart(selector=MainPageLocators.RECOMMENDED_ITEMS_LIST, is_hover=False, cart_items=cart_items)
 
     def should_be_redirect_on_youtube(self):
         self.check_url(expected_url="youtube")
