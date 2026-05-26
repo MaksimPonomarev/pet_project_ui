@@ -21,6 +21,7 @@ class MainPage(BasePage):
     def should_be_cookie_banner(self):
         self.elem_should_be_visible(selector=MainPageLocators.COOKIE_BANNER)
 
+
     def should_not_be_cookie_banner(self):
         self.should_not_be_visible(selector=MainPageLocators.COOKIE_BANNER)
 

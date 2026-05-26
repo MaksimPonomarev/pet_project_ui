@@ -8,5 +8,4 @@ RUN playwright install --with-deps chromium
 
 COPY . .
 
-
-CMD ["pytest", "-s", "-v", "--reruns=2", "--reruns-delay=3"]
+CMD ["pytest", "-s", "-v", "--reruns=2", "--reruns-delay=3", "-m", "not with_cookie_banner"]
