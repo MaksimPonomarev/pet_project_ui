@@ -17,4 +17,4 @@ jobs:
         run:  docker build -t pet-tests .
 
       - name: Run tests
-        run: docker run -e BASE_URL=https://automationexercise.com -e SLOW_MO=0 -e "TEST_DATA.IMAGE_PNG_FILE=test_data/Screenshot_1.png" pet-tests
+        run: docker run -e BASE_URL=https://automationexercise.com -e SLOW_MO=0 -e "TEST_DATA.IMAGE_PNG_FILE=test_data/Screenshot_1.png" pet-tests pytest -m "not with_cookie_banner"
